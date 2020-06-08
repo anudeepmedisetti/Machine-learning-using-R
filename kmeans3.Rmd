@@ -1,0 +1,19 @@
+
+donc=read.table("Test_Clusters_Atypiques.txt",header=F)
+donc=as.matrix(donc)
+center=matrix(0,2,ncol(donc))
+center[1,]=donc[1,]
+center[2,]=donc[1499,]
+k=kmeans(donc,center)
+plot(donc,col=k$cluster)
+View(k)
+cor(donc)
+d=dist(donc,"euclidean")
+h=hclust(d,"ward.D2")
+plot(h$height)
+X11()
+plot(h)
+rect.hclust(h,3)
+c=cutree(h,3)
+X11()
+plot(donc, col=c)

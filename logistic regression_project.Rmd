@@ -1,0 +1,43 @@
+# LOAD AND EXPLORE DATA ----
+myData <- read.csv("binary.csv",header=T)
+head(myData)
+summary(myData)
+str(myData)
+
+
+# ALTER DATA FOR THE PURPOSE OF THIS DEMONSTRATION ----
+myData[myData$admit == 1, 3] <- myData[myData$admit == 1, 3] + 1
+
+# PLOT DATA ----
+library(ggplot2)
+ggplot(myData, aes(gpa, admit)) +
+  geom_point()
+ggplot(myData, aes(gpa, admit)) +
+  geom_point() +
+  geom_smooth(method = "glm", se = FALSE, method.args = list(family = "binomial"))
+  
+  
+# MODEL ADMIT BY GPA ----
+gpaModel <- lm(admit ~ gpa, data = myData, family = "binomial")
+summary(gpaModel)
+coef(gpaModel)
+confint(gpaModel)
+exp(coef(gpaModel))
+exp(confint(gpaModel))
+
+
+# MODEL ADMIT BY GPA, GRE AND RANK ----
+fullModel <- glm(admit ~ gpa + gre + rank, data = myData, family = "binomial")
+summary(fullModel)
+exp(coef(fullModel))
+exp(confint(fullModel))
+
+
+# ASSESS MODEL USING CROSS VALIDATION ----
+library(caret)
+crossValSettings <- trainControl(method = "repeatedcv", number = 10,
+                                 savePredictions = TRUE)
+crossVal <- train(as.factor(admit) ~ gpa + gre + rank, data = myData, family = "binomial",
+                  method = "glm", trControl = crossValSettings, tuneLength = 2)
+pred <- predict(crossVal, newdata = myData)
+confusionMatrix(table(pred, myData$admit))

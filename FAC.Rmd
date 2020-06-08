@@ -1,0 +1,17 @@
+library(explor)
+tabe=read.table("Marketing.txt",header=T,dec=",")
+View(tabe)
+chisq <- chisq.test(tabe)
+View(chisq)
+res.ca <- CA(tabe, graph=F)
+fviz_eig(res.ca)
+pairs(tabe[,1:11])
+tabe[,1:11]=scale(tabe[,1:11])
+row<-get_ca_row(res.ca)
+row$coord
+row$contrib
+col<-get_ca_col(res.ca)
+col$coord
+col$contrib
+fviz_ca_biplot(res.ca,repel=TRUE)
+fviz_ca_biplot(res.ca,map="colgreen",arrow=c(TRUE,FALSE),repel=TRUE)

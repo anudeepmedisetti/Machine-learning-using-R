@@ -1,0 +1,2 @@
+res.PCA$eig            /represent the inertia- two principal component explain the inertia at level
+niga has the highest contribution

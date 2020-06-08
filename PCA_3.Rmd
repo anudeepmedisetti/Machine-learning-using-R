@@ -1,0 +1,14 @@
+library(explor)
+table=read.table("PoissonsData.txt",header=T,dec=",")
+View(table)
+pairs(table[,1:16])
+table[,1:16]=scale(table[,1:16])
+res.PCA=PCA(table[,1:16],scale.unit=T,ncp=16,graph=T,axes=c(1,2))
+res.PCA$eig 
+barplot(res.PCA$eig[,2],main="presentage of varience by axis")
+res.PCA$var$cos2
+res.PCA$var$contrib
+sort(res.PCA$ind$contrib[,1],decreasing=T)
+res.PCA=PCA(table[,1:16],ind.sup=c(127),scale.unit=T,ncp=16,graph=T,axes=c(1,2))
+PCA(table,quali.sup=17,scale.unit=T,ncp=17,graph=T,axes=c(1,2))
+explor(res.PCA)

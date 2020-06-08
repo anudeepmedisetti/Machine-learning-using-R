@@ -1,0 +1,13 @@
+tab=read.table("EspVieACPData.txt",header=T)
+View(tab)
+pairs(tab[,1:6])
+tab[,1:6]=scale(tab[,1:6])
+res.PCA=PCA(tab[,1:6],scale.unit=T,ncp=6,graph=T,axes=c(1,2))
+res.PCA$eig  
+barplot(res.PCA$eig[,2],main="presentage of varience by axis")
+res.PCA$var$cos2
+res.PCA$var$contrib
+sort(res.PCA$ind$contrib[,1],decreasing=T)
+res.PCA=PCA(tab[,1:6],ind.sup=c(127),scale.unit=T,ncp=6,graph=T,axes=c(1,2))
+PCA(tab,quali.sup=7,scale.unit=T,ncp=6,graph=T,axes=c(1,2))
+explor(res.PCA)

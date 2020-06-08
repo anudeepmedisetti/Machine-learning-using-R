@@ -1,0 +1,17 @@
+library(explor)
+tab1=read.table("Nobel.txt",header=T,dec=",")
+View(tab1)
+chisq <- chisq.test(tab1)
+View(chisq)
+res.ca1 <- CA(tab1, graph=F)
+fviz_eig(res.ca1)
+pairs(tab1[,1:9])
+tab1[,1:9]=scale(tab1[,1:9])
+row<-get_ca_row(res.ca1)
+row$coord
+row$contrib
+col<-get_ca_col(res.ca1)
+col$coord
+col$contrib
+fviz_ca_biplot(res.ca1,repel=TRUE)
+fviz_ca_biplot(res.ca1,map="colgreen",arrow=c(TRUE,FALSE),repel=TRUE)

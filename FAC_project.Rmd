@@ -1,0 +1,17 @@
+library(explor)
+data(children)
+View(children)
+chisq <- chisq.test(children[,1:5])
+View(chisq)
+res.ca <- CA(children[,1:5], graph=F)
+fviz_eig(res.ca)
+## select rows and columns that have a cos2 greater than 0.8
+plot(res.ca,selectCol="cos2 0.8",selectRow="cos2 0.8")
+row<-get_ca_row(res.ca)
+row$coord
+row$contrib
+col<-get_ca_col(res.ca)
+col$coord
+col$contrib
+fviz_ca_biplot(res.ca,repel=TRUE)
+fviz_ca_biplot(res.ca,map="colgreen",arrow=c(TRUE,FALSE),repel=TRUE)
